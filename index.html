@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shifter USD</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+  <div class="main">
+    <div class="top">
+      <div class="field_text">
+        <label for="total_balance">Total USD</label>
+        <input type="text" name="input" id="total_balance" value="100" />
+      </div>
+      <div class="field_button">
+        <input type="button" id="setBalance" value="Set USD" />
+      </div>
+      <div class="field_add_token">
+        <input type="text" id="addToken" />
+      </div>
+      <div class="field_button">
+        <input type="button" id="addTokenBtn" value="Add token" />
+      </div>
+      <div class="field_popup">
+        <dialog>
+          <div id="modal-box">
+            <div class="modal-content"></div>
+            <button id="hide-modal-btn">x</button>
+          </div>
+        </dialog>
+        <button id="show-modal-btn">Show modal</button> 
+      </div>
+    </div>
+      <hr />
+    </div>
+    <div class="bottom pave">
+      <div class="shifter">
+        <div class="close"><button id="closeBtn">x</button></div>
+        <label for="edit-btc">USD to BTC</label>
+        <progress ctrl="btc" max="10" value="0"></progress>
+        <div class="row">
+          <button ctrl="btc" action="minus">&lt;</button>
+          <input type="text" ctrl="btc" name="edit-btc" id="edit-btc" />
+          <button ctrl="btc" action="plus">&gt;</button>
+        </div>
+        <progress ctrl="btc" max="10" value="0"></progress>
+        <input type="range" ctrl="btc" name="btc" id="btc" min="0" max="10" value="0" />
+        <div class="field_currency">
+          <span>BTC: </span>
+          <span ctrl="btc"></span>
+        </div>
+      </div>
+
+      <div class="shifter">
+        <div class="close"><button id="closeBtn">x</button></div>
+        <label for="edit-eth">USD to ETH</label>
+        <progress ctrl="eth" max="10" value="0"></progress>
+        <div class="row">
+          <button ctrl="eth" action="minus">&lt;</button>
+          <input type="text" ctrl="eth" name="edit-eth" id="edit-eth" />
+          <button ctrl="eth" action="plus">&gt;</button>
+        </div>
+        <progress ctrl="eth" max="1000" value="0"></progress>
+        <input type="range" ctrl="eth" name="eth" id="" min="0" max="1000" value="0" />
+        <div class="field_currency">
+          <span>ETH: </span>
+          <span ctrl="eth"></span>
+        </div>
+      </div>
+
+      <div class="shifter">
+        <div class="close"><button id="closeBtn">x</button></div>
+        <label for="edit-ltc">USD to LTC</label>
+        <progress ctrl="ltc" max="1000" value="0"></progress>
+        <div class="row">
+          <button ctrl="ltc" action="minus">&lt;</button>
+          <input type="text" ctrl="ltc" name="edit-ltc" id="edit-ltc" />
+          <button ctrl="ltc" action="plus">&gt;</button>
+        </div>
+        <progress ctrl="ltc" max="1000" value="0"></progress>
+        <input type="range" ctrl="ltc" name="ltc" id="" min="0" max="1000" value="0" />
+        <div class="field_currency">
+          <span>LTC: </span>
+          <span ctrl="ltc"></span>
+        </div>
+      </div>
+
+      <div class="shifter">
+        <div class="close"><button id="closeBtn">x</button></div>
+        <label for="edit-doge">USD to DOGE</label>
+        <progress ctrl="doge" max="1000" value="0"></progress>
+        <div class="row">
+          <button ctrl="doge" action="minus">&lt;</button>
+          <input type="text" ctrl="doge" name="edit-doge" id="edit-doge" />
+          <button ctrl="doge" action="plus">&gt;</button>
+        </div>
+        <progress ctrl="doge" max="1000" value="0"></progress>
+        <input type="range" ctrl="doge" name="doge" id="" min="0" max="1000" value="0" />
+        <div class="field_currency">
+          <span>DOGE: </span>
+          <span ctrl="doge"></span>
+        </div>
+      </div>
+    </div>
+
+
+  <script src="./model.js"></script>
+  <script src="./api.js"></script>
+  <script src="./view.js"></script>
+  <script src="./controller.js"></script>
+  <script src="./index.js"></script>
+</body>
+
+</html>
