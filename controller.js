@@ -2,18 +2,21 @@ function onInputTotalBalanceHandler() {
   elTextTotal.value = checkEnteredNumber(elTextTotal.value);
 }
 
-function onClickAddTokenHandler(e) {
-    if (elInputTextToken.value.length > 2) {
-      // model.addToken(elInputTextToken.value);
-      const ctrl = elInputTextToken.value;
-      renderInputEdits();
-      renderProgresses();
-      renderInputRanges();
-      renderCurrencyPrices();
-      addFetchForToken(ctrl);
-      elInputTextToken.value = "";
-  }
+function onClickAddTokenHandler() {
+  const ctrl = elInputTextToken.value;
+  checkToken(ctrl) &&
+  // renderToken(ctrl);
+  // model.addToken(tokenName);
+  // model.addToken(elInputTextToken.value);
+  renderInputEdits();
+  renderProgresses();
+  renderInputRanges();
+  renderCurrencyPrices();
+  // addFetchForToken(ctrl); ///инфинити
+  // fetchCurrency(ctrl);
+  elInputTextToken.value = "";
 }
+
 
 function onClickTotalBalanceHandler() {
   model.setTotal(+elTextTotal.value);
@@ -21,6 +24,7 @@ function onClickTotalBalanceHandler() {
   renderProgresses();
   renderInputRanges();
   renderCurrencyPrices();
+  loadCurrencyForExistToken();
 }
 
 function onInputEditHandler(e) {
@@ -41,7 +45,6 @@ function onClickPlusButtonHandler(e) {
   renderInputRanges();
   renderCurrencyPrices();
 }
-
 function onClickMinusButtonHandler(e) {
   const ctrl = e.target.getAttribute("ctrl");
   model.setMinus(ctrl);
@@ -50,7 +53,6 @@ function onClickMinusButtonHandler(e) {
   renderInputRanges();
   renderCurrencyPrices();
 }
-
 function oninputRangeHandler(e) {
   const ctrl = e.target.getAttribute("ctrl");
   model.setValue(ctrl, e.target.value);
@@ -59,25 +61,16 @@ function oninputRangeHandler(e) {
   renderInputRanges();
   renderCurrencyPrices();
 }
-
 function onClickCloseBlockHandler(e) {
   const elCloseButton = e.target.parentNode.parentNode;
+  const ctrl = e.target.getAttribute("ctrl");//null
+  console.log(ctrl);
+  model.removeToken(ctrl);
   removeBlock(elCloseButton);
-  model.removeToken() /// дописать удаление 
 }
-
-function onClickShowModal() {
-  renderShowDialog()
+function onClickShowModalHandler() {
+  renderShowDialog();
 }
-
-function onClickHideModal() {
-  renderHideDialog()
+function onClickHideModalHandler() {
+  renderHideDialog();
 }
-
-// function onClickDialog(e) {
-//   e.stopPropagation()
-// }
-
-// function onClickDocument() {
-//   renderHideDialog()
-// }

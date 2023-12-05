@@ -25,15 +25,10 @@ const model = {
     doge: 0,
   },
   addToken(ctrl) {
-    if(this.isTokenExist(ctrl)){
-      console.log('такой токен уже существует');
-    } else {
-      console.log('добавляю новый');
       this.maximums[ctrl] = 0;
       this.values[ctrl] = 0;
       this.currency[ctrl] = 0;
       this.convertValues(ctrl);
-    }
   },
   isTokenExist(ctrl) {
     return ctrl in this.values;
@@ -105,4 +100,36 @@ function checkEnteredNumber(str) {
   return parseInt(str) || 0;
 }
 
+
+
+// model.addToken('xrp');
+// console.log(model.values)
+// model.isTokenExist('eth')
+
+// model.removeToken('xrp');
+// console.log(model.values)
+
+// model.setTotal(1000);
+// console.log(model.total);
+
+// model.setMax('btc', 500);
+// console.log(model.maximums);
+
+// model.setPlus('eth');
+// model.setPlus('eth');
+// console.log(model.values);
+
+// model.setMinus('eth');
+// console.log(model.values);
+
+// model.setValue('ltc', 50);
+// model.setValue('xrp', 50);
+// console.log(model.values);
+
+// model.setCurrencyPrice('btc', 3000);
+// console.log(model.currency);
+
+
+
+// при добавлении не существующего токена - рендер затем модалка - токена не сущ 
 

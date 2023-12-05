@@ -73,6 +73,7 @@ function generateBlock(ctrl) {
   elRange.setAttribute("max", "0");
   elRange.setAttribute("value", "0");
   elButton.setAttribute("id", "close");
+  elButton.setAttribute("ctrl", ctrl);
   elSpan2.setAttribute("ctrl", ctrl);
 
   container.classList.add("shifter");
@@ -139,6 +140,7 @@ function renderHideDialog() {
 }
 
 function renderModalNotFound(){
+  clearModalContent()
   const span = document.createElement('span')
   span.textContent = 'oops token is not found'
   elModalContent.appendChild(span)
@@ -146,22 +148,29 @@ function renderModalNotFound(){
 }
 
 function renderModalNetworkError(){
+  clearModalContent()
   const span = document.createElement('span')
-  span.textContent = 'oops network error'
+  span.textContent = 'network error'
   elModalContent.appendChild(span)
   renderShowDialog()
 }
 
 function renderModalAlreadyExsist(){
+  clearModalContent()
   const span = document.createElement('span')
-  span.textContent = 'oops this token already exists'
+  span.textContent = 'this token already exists'
   elModalContent.appendChild(span)
   renderShowDialog()
 }
 function renderModalSmallTokenName(){
+  clearModalContent()
   const span = document.createElement('span')
   span.textContent = 'please enter more characters for token'
   elModalContent.appendChild(span)
   renderShowDialog()
+}
+
+function clearModalContent() {
+  elModalContent.textContent = ''
 }
 
