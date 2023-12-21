@@ -35,14 +35,10 @@ elCloseBtns.forEach((elCloseBtn) => {
 
 function updateTokensAll() {
   model.tokens.forEach((token) => {
-    model.updateTokenPrice (token.caption,
-      (tokenName, tokenPrice) => {
-        console.log(tokenName, tokenPrice);
-      },
-    );
+    model.updateTokenPrice(token.caption, (tokenName, tokenPrice) => {
+      console.log(tokenName, tokenPrice);
+      model.setTokenPrice(tokenName, tokenPrice);
+    });
   });
 }
-updateTokensAll()
-
-
-
+updateTokensAll();

@@ -125,12 +125,15 @@ const model = {
   updateTokenPrice(tokenName, cbSuccess, cbFail) {
     fetchCurrency(tokenName)
       .then((tokenPrice) => {
-        this.setTokenPrice(tokenName, tokenPrice);
-        cbSuccess(tokenName, tokenPrice);
+        if (tokenPrice) {
+          cbSuccess(tokenName, tokenPrice);
+        } else {
+          cbFail("token not exist");
+        }
       })
       .catch((error) => {
         cbFail(error);
-        console.log('error', error)
+        console.log("error", error);
       });
   },
 
@@ -160,7 +163,6 @@ const model = {
 // model.setValue('doge',100)
 // model.addToken('aaa')
 // model.setValue('aaa',10)
-
 
 // model.getMaxByCaption('btc')
 // model.setValue('lol', 100)

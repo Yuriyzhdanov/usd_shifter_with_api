@@ -102,6 +102,7 @@ function generateBlock(ctrl) {
   elDiv1.appendChild(elSpan1);
   elDiv1.appendChild(elSpan2);
 
+  renderInputRange(elRange);
   elRange.oninput = oninputRangeHandler;
   ElPlusButton.onclick = onClickPlusButtonHandler;
   elMinusButton.onclick = onClickMinusButtonHandler;
@@ -111,7 +112,7 @@ function generateBlock(ctrl) {
   return container;
 }
 
-function renderToken(ctrl) {
+function renderBottomPave(ctrl) {
   const bottomPave = document.querySelector(".bottom.pave");
   const newBlock = generateBlock(ctrl);
   bottomPave.appendChild(newBlock);

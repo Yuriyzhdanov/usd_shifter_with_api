@@ -5,11 +5,11 @@ function checkEnteredNumber(str) {
 function checkToken(tokenName) {
   if (tokenName.length < 3) {
     renderModalSmallTokenName();
+    return false;
   } else if (model.isTokenExist(tokenName)) {
     renderModalAlreadyExsist();
+    return false;
   } else {
-    model.addToken(tokenName);
-    renderToken(tokenName);
-    console.log('checkToken work');
+    return true;
   }
 }

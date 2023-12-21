@@ -5,13 +5,24 @@ function onInputTotalBalanceHandler() {
 function onClickAddTokenHandler() {
   const ctrl = elInputTextToken.value;
   if (checkToken(ctrl)) {
-    renderToken(ctrl);
+    model.updateTokenPrice(
+      ctrl,
+      (tokenName, tokenPrice) => {
+        model.addToken(tokenName);
+        model.setTokenPrice(tokenName, tokenPrice);
+        renderBottomPave(tokenName);
+      },
+      () => {
+        renderModalNotFound();
+        console.log("ERROR!!");
+      }
+    );
   }
+
   renderInputEdits();
   renderProgresses();
   renderInputRanges();
   renderCurrencyPrices();
-  updateTokensAll();
   elInputTextToken.value = "";
 }
 
