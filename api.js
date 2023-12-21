@@ -5,40 +5,13 @@ async function sendRequest(url, callback) {
   const json = await resp.json();
   return callback(json);
 }
-async function fetchCurrency(tokenName) {
+
+  async function fetchCurrency(tokenName) {
   const URL = `${API_URL}/price?fsym=${tokenName}&tsyms=USD`;
-  return sendRequest(URL, (data) => data.USD);
-}
-function successToken(tokenName, tokenPrice) {
-  if (tokenPrice) {
-    model.setCurrencyPrice(tokenName, tokenPrice);
-  } else {
-    renderModalNotFound();
-    return;
-  }
-}
+  return sendRequest(URL, (data) => data.USD)}
 
-function addFetchForToken(tokenName) {
-  fetchCurrency(tokenName)
-    .then((tokenPrice) => successToken(tokenName, tokenPrice))
-    .catch(renderModalNetworkError);
-}
-
-function loadCurrencyForExistToken() {
-  for (const tokenName in model.currency) {
-    fetchCurrency(tokenName)
-      .then((tokenPrice) => successToken(tokenName, tokenPrice))
-      .catch(renderModalNetworkError);
-  }
-}
-
-function checkToken(tokenName) {
-  if (tokenName.length < 3) {
-    renderModalSmallTokenName();
-  } else if (model.isTokenExist(tokenName)) {
-    renderModalAlreadyExsist();
-  } else {
-    model.addToken(tokenName);
-    renderToken(tokenName);
-  }
-}
+    // fetchCurrency('qqq')
+    //   .then((result)=> {
+    //     console.log('result', result)
+    //   })
+    

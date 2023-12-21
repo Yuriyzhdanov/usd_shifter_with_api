@@ -33,4 +33,16 @@ elCloseBtns.forEach((elCloseBtn) => {
   elCloseBtn.onclick = onClickCloseBlockHandler;
 });
 
+function updateTokensAll() {
+  model.tokens.forEach((token) => {
+    model.updateTokenPrice (token.caption,
+      (tokenName, tokenPrice) => {
+        // console.log(tokenName, tokenPrice);
+      },
+    );
+  });
+}
+updateTokensAll()
+
+
 

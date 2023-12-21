@@ -10,5 +10,6 @@ function checkToken(tokenName) {
   } else {
     model.addToken(tokenName);
     renderToken(tokenName);
+    console.log('checkToken work');
   }
 }

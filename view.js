@@ -1,18 +1,19 @@
 function renderInputEdit(elInputEdits) {
   const ctrl = elInputEdits.getAttribute("ctrl");
-  elInputEdits.value = model.values[ctrl];
+  const foundTokenVolume = model.getVolumeByCaption(ctrl);
+  elInputEdits.value = foundTokenVolume;
 }
 
 function renderProgress(elProgress) {
   const ctrl = elProgress.getAttribute("ctrl");
-  elProgress.max = model.maximums[ctrl];
-  elProgress.value = model.values[ctrl];
+  elProgress.max = model.getRangeMaxByCaption(ctrl);
+  elProgress.value = model.getVolumeByCaption(ctrl);
 }
 
 function renderInputRange(elRange) {
   const ctrl = elRange.getAttribute("ctrl");
-  elRange.max = model.maximums[ctrl];
-  elRange.value = model.values[ctrl];
+  elRange.max = model.getRangeMaxByCaption(ctrl);
+  elRange.value = model.getVolumeByCaption(ctrl);
 }
 
 function renderInputEdits() {
@@ -58,7 +59,7 @@ function generateBlock(ctrl) {
   elInput.setAttribute("ctrl", ctrl);
   elInput.setAttribute("name", `edit-${ctrl}`);
   elInput.setAttribute("id", `edit-${ctrl}`);
-  elInput.setAttribute("value", '0');
+  elInput.setAttribute("value", "0");
 
   ElPlusButton.setAttribute("ctrl", ctrl);
   ElPlusButton.setAttribute("action", "plus");
@@ -118,11 +119,14 @@ function renderToken(ctrl) {
 
 function renderCurrencyPrice(elCurrencyPrice) {
   const ctrl = elCurrencyPrice.getAttribute("ctrl");
-  elCurrencyPrice.textContent = +model.convertedValues[ctrl].toPrecision(3)
+  const currencyValue = model.getCountByCaption(ctrl);
+  elCurrencyPrice.textContent = +currencyValue.toPrecision(3);
 }
 
 function renderCurrencyPrices() {
-  const elCurrencyPrices = document.querySelectorAll(".field_currency > span + span");
+  const elCurrencyPrices = document.querySelectorAll(
+    ".field_currency > span + span"
+  );
   elCurrencyPrices.forEach(renderCurrencyPrice);
 }
 
@@ -131,46 +135,53 @@ function removeBlock(item) {
 }
 
 function renderShowDialog() {
-  const elDialog = document.querySelector('dialog')
-  elDialog.showModal()
+  const elDialog = document.querySelector("dialog");
+  elDialog.showModal();
 }
 function renderHideDialog() {
-  const elDialog = document.querySelector('dialog')
-  elDialog.close()
+  const elDialog = document.querySelector("dialog");
+  elDialog.close();
 }
 
-function renderModalNotFound(){
-  clearModalContent()
-  const span = document.createElement('span')
-  span.textContent = 'oops token is not found'
-  elModalContent.appendChild(span)
-  renderShowDialog()
+function renderModalNotFound() {
+  clearModalContent();
+  const span = document.createElement("span");
+  span.textContent = "oops token is not found";
+  elModalContent.appendChild(span);
+  renderShowDialog();
 }
 
-function renderModalNetworkError(){
-  clearModalContent()
-  const span = document.createElement('span')
-  span.textContent = 'network error'
-  elModalContent.appendChild(span)
-  renderShowDialog()
+function renderModalNetworkError() {
+  clearModalContent();
+  const span = document.createElement("span");
+  span.textContent = "network error";
+  elModalContent.appendChild(span);
+  renderShowDialog();
 }
 
-function renderModalAlreadyExsist(){
-  clearModalContent()
-  const span = document.createElement('span')
-  span.textContent = 'this token already exists'
-  elModalContent.appendChild(span)
-  renderShowDialog()
+function renderModalAlreadyExsist() {
+  clearModalContent();
+  const span = document.createElement("span");
+  span.textContent = "this token already exists";
+  elModalContent.appendChild(span);
+  renderShowDialog();
 }
-function renderModalSmallTokenName(){
-  clearModalContent()
-  const span = document.createElement('span')
-  span.textContent = 'please enter more characters for token'
-  elModalContent.appendChild(span)
-  renderShowDialog()
+function renderModalSmallTokenName() {
+  clearModalContent();
+  const span = document.createElement("span");
+  span.textContent = "please enter more characters for token";
+  elModalContent.appendChild(span);
+  renderShowDialog();
 }
 
 function clearModalContent() {
-  elModalContent.textContent = ''
+  elModalContent.textContent = "";
 }
 
+//view.js
+// function renderCurrencyPrice(elCurrencyPrice) {
+//   const ctrl = elCurrencyPrice.getAttribute("ctrl");
+//   model.updateTokenPrice(ctrl,(tokenName, tokenPrice) => {
+//     elCurrencyPrice.textContent = (tokenName, tokenPrice)
+//   })
+// }

@@ -4,19 +4,16 @@ function onInputTotalBalanceHandler() {
 
 function onClickAddTokenHandler() {
   const ctrl = elInputTextToken.value;
-  checkToken(ctrl) &&
-  // renderToken(ctrl);
-  // model.addToken(tokenName);
-  // model.addToken(elInputTextToken.value);
-  renderInputEdits();
-  renderProgresses();
-  renderInputRanges();
-  renderCurrencyPrices();
-  // addFetchForToken(ctrl); ///инфинити
-  // fetchCurrency(ctrl);
+  if( checkToken(ctrl)){
+    renderToken(ctrl)
+    renderInputEdits();
+    renderProgresses();
+    renderInputRanges();
+    renderCurrencyPrices();
+    updateTokensAll()
+  }
   elInputTextToken.value = "";
 }
-
 
 function onClickTotalBalanceHandler() {
   model.setTotal(+elTextTotal.value);
@@ -24,7 +21,6 @@ function onClickTotalBalanceHandler() {
   renderProgresses();
   renderInputRanges();
   renderCurrencyPrices();
-  loadCurrencyForExistToken();
 }
 
 function onInputEditHandler(e) {
@@ -36,7 +32,6 @@ function onInputEditHandler(e) {
   renderInputRanges();
   renderCurrencyPrices();
 }
-
 function onClickPlusButtonHandler(e) {
   const ctrl = e.target.getAttribute("ctrl");
   model.setPlus(ctrl);
@@ -63,8 +58,7 @@ function oninputRangeHandler(e) {
 }
 function onClickCloseBlockHandler(e) {
   const elCloseButton = e.target.parentNode.parentNode;
-  const ctrl = e.target.getAttribute("ctrl");//null
-  console.log(ctrl);
+  const ctrl = e.target.getAttribute("ctrl");
   model.removeToken(ctrl);
   removeBlock(elCloseButton);
 }

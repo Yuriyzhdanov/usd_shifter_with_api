@@ -1,135 +1,172 @@
 const model = {
   total: 0,
-  values: {
-    btc: 0,
-    eth: 0,
-    ltc: 0,
-    doge: 0,
-  },
-  maximums: {
-    btc: 0,
-    eth: 0,
-    ltc: 0,
-    doge: 0,
-  },
-  convertedValues: {
-    btc: 0,
-    eth: 0,
-    ltc: 0,
-    doge: 0,
-  },
-  currency: {
-    btc: 0,
-    eth: 0,
-    ltc: 0,
-    doge: 0,
-  },
-  addToken(ctrl) {
-      this.maximums[ctrl] = 0;
-      this.values[ctrl] = 0;
-      this.currency[ctrl] = 0;
-      this.convertValues(ctrl);
-  },
-  isTokenExist(ctrl) {
-    return ctrl in this.values;
-  },
-  removeToken(ctrl) {
-    delete this.values[ctrl];
-    delete this.maximums[ctrl];
-    delete this.currency[ctrl];
-    delete this.convertedValues[ctrl];
+  tokens: [
+    {
+      caption: "eth",
+      price: 0,
+      volume: 0,
+      count: 0,
+      rangeMaximum: 0,
+    },
+    {
+      caption: "btc",
+      price: 0,
+      volume: 0,
+      count: 0,
+      rangeMaximum: 0,
+    },
+    {
+      caption: "ltc",
+      price: 0,
+      volume: 0,
+      count: 0,
+      rangeMaximum: 0,
+    },
+    {
+      caption: "doge",
+      price: 0,
+      volume: 0,
+      count: 0,
+      rangeMaximum: 0,
+    },
+  ],
 
+  addToken(tokenName) {
+    if (this.isTokenExist(tokenName)) {
+      console.log("такой токен уже существует");
+    } else {
+      console.log("добавляю новый");
+      this.tokens.push({
+        caption: tokenName,
+        price: 0,
+        volume: 0,
+        count: 0,
+        rangeMaximum: 0,
+      });
+      const firstToken = this.tokens[0].caption;
+      const firstVolume = this.tokens[0].volume;
+      this.setValue(firstToken, firstVolume);
+    }
   },
-  checkValueLimit(ctrl, value) {
+
+  removeToken(tokenName) {
+    this.tokens = this.tokens.filter((token) => token.caption !== tokenName);
+  },
+
+  isTokenExist(tokenName) {
+    return !!this.tokens.find((token) => token.caption === tokenName);
+  },
+
+  checkValueLimit(tokenName, value) {
+    const max = this.tokens.find((token) => {
+      return token.caption === tokenName;
+    }).rangeMaximum;
     if (value < 0) {
       return 0;
     }
-    if (value > this.maximums[ctrl]) {
-      return this.maximums[ctrl];
+    if (value > max) {
+      return max;
     }
     return value;
   },
+
   setTotal(total) {
-    total = +total;
-    this.total = total;
-    for (const key in this.maximums) {
-      this.setMax(key, total);
-      this.setValue(key, 0);
+    this.total = +total;
+    this.tokens.forEach((token) => {
+      token.rangeMaximum = this.total;
+      this.setValue(token.caption, 0);
+    });
+  },
+
+  setPlus(tokenName) {
+    const curToken = this.tokens.find((token) => token.caption === tokenName);
+    this.setValue(tokenName, curToken.volume + 1);
+    this.convertValues(tokenName);
+  },
+
+  setMinus(tokenName) {
+    const curToken = this.tokens.find((token) => token.caption === tokenName);
+    this.setValue(tokenName, curToken.volume - 1);
+    this.convertValues(tokenName);
+  },
+
+  setValue(tokenName, value) {
+    const curToken = this.tokens.find((token) => token.caption === tokenName);
+    if (curToken) {
+      curToken.volume = this.checkValueLimit(tokenName, +value);
+      this.tokens.forEach((token) => {
+        token.rangeMaximum = this.total - this.sumValues() + token.volume;
+      });
+      this.convertValues(tokenName);
     }
   },
-  setMax(ctrl, max) {
-    max = +max;
-    this.maximums[ctrl] = max;
-  },
-  setPlus(ctrl) {
-    this.setValue(ctrl, this.values[ctrl] + 1);
-  },
-  setMinus(ctrl) {
-    this.setValue(ctrl, this.values[ctrl] - 1);
-  },
-  setValue(ctrl, value) {
-    value = +value;
-    this.values[ctrl] = this.checkValueLimit(ctrl, value);
-    for (const key in this.maximums) {
-      this.maximums[key] = this.total - this.sumValues() + this.values[key];
-    }
-    this.convertValues(ctrl);
-  },
-  setCurrencyPrice(tokenName, currencyPrice) {
-    this.currency[tokenName] = currencyPrice;
-  },
-  convertValues(ctrl) {
-    const currencyValue = this.currency[ctrl];
-    if (currencyValue !== 0) {
-      this.convertedValues[ctrl] = this.values[ctrl] / currencyValue;
-    } else {
-      this.convertedValues[ctrl] = 0;
-    }
-  },
+
   sumValues() {
     let sum = 0;
-    for (const key in this.values) {
-      sum += this.values[key];
-    }
+    this.tokens.forEach((token) => {
+      sum += token.volume;
+    });
     return sum;
   },
 
+  setTokenPrice(tokenName, tokenPrice) {
+    this.tokens.find((token) => token.caption === tokenName).price = tokenPrice;
+  },
+
+  convertValues(tokenName) {
+    const curToken = this.tokens.find((token) => token.caption === tokenName);
+    if (curToken.price !== 0) {
+      curToken.count = curToken.volume / curToken.price;
+    } else {
+      curToken.count = 0;
+    }
+  },
+
+  updateTokenPrice(tokenName, cbSuccess, cbFail) {
+    fetchCurrency(tokenName)
+      .then((tokenPrice) => {
+        this.setTokenPrice(tokenName, tokenPrice);
+        cbSuccess(tokenName, tokenPrice);
+        // this.convertValues(tokenName);
+      })
+      .catch((error) => {
+        cbFail(error);
+        console.log('error', error)
+      });
+  },
+
+  getPriceByCaption(tokenName) {
+    const token = this.tokens.find((token) => token.caption === tokenName);
+    return token.price;
+  },
+  getVolumeByCaption(tokenName) {
+    const token = this.tokens.find((token) => token.caption === tokenName);
+    return token.volume;
+  },
+  getCountByCaption(tokenName) {
+    const token = this.tokens.find((token) => token.caption === tokenName);
+    return token.count;
+  },
+  getRangeMaxByCaption(tokenName) {
+    const token = this.tokens.find((token) => token.caption === tokenName);
+    return token.rangeMaximum;
+  },
 };
 
-function checkEnteredNumber(str) {
-  return parseInt(str) || 0;
-}
+// console.log(model.tokens);
+// model.setTotal(200)
+// console.log(model.tokens);
+// model.setValue('ltc',1)
+// console.log(model.tokens);
+// model.setValue('doge',100)
+// model.addToken('aaa')
+// model.setValue('aaa',10)
 
 
-
-// model.addToken('xrp');
-// console.log(model.values)
-// model.isTokenExist('eth')
-
-// model.removeToken('xrp');
-// console.log(model.values)
-
-// model.setTotal(1000);
-// console.log(model.total);
-
-// model.setMax('btc', 500);
-// console.log(model.maximums);
-
-// model.setPlus('eth');
-// model.setPlus('eth');
-// console.log(model.values);
-
-// model.setMinus('eth');
-// console.log(model.values);
-
-// model.setValue('ltc', 50);
-// model.setValue('xrp', 50);
-// console.log(model.values);
-
-// model.setCurrencyPrice('btc', 3000);
-// console.log(model.currency);
-
-
-
-// при добавлении не существующего токена - рендер затем модалка - токена не сущ 
-
+// model.getMaxByCaption('btc')
+// model.setValue('lol', 100)
+// console.log(model.tokens);
+// model.setPlus('lol')
+// console.log(model.tokens);
+// model.removeToken('btc')
+// console.log(model.tokens);
