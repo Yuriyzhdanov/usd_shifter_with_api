@@ -4,14 +4,14 @@ function onInputTotalBalanceHandler() {
 
 function onClickAddTokenHandler() {
   const ctrl = elInputTextToken.value;
-  if( checkToken(ctrl)){
-    renderToken(ctrl)
-    renderInputEdits();
-    renderProgresses();
-    renderInputRanges();
-    renderCurrencyPrices();
-    updateTokensAll()
+  if (checkToken(ctrl)) {
+    renderToken(ctrl);
   }
+  renderInputEdits();
+  renderProgresses();
+  renderInputRanges();
+  renderCurrencyPrices();
+  updateTokensAll();
   elInputTextToken.value = "";
 }
 

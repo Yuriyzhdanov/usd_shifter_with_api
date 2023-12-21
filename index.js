@@ -37,7 +37,7 @@ function updateTokensAll() {
   model.tokens.forEach((token) => {
     model.updateTokenPrice (token.caption,
       (tokenName, tokenPrice) => {
-        // console.log(tokenName, tokenPrice);
+        console.log(tokenName, tokenPrice);
       },
     );
   });

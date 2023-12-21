@@ -127,7 +127,6 @@ const model = {
       .then((tokenPrice) => {
         this.setTokenPrice(tokenName, tokenPrice);
         cbSuccess(tokenName, tokenPrice);
-        // this.convertValues(tokenName);
       })
       .catch((error) => {
         cbFail(error);
