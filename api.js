@@ -10,9 +10,3 @@ async function sendRequest(url, callback) {
   const URL = `${API_URL}/price?fsym=${tokenName}&tsyms=USD`;
   return sendRequest(URL, (data) => data.USD)}
 
-    // fetchCurrency('qqq')
-    //   .then((result)=> {
-    //     console.log('result', result)
-    //   })
-    
-    

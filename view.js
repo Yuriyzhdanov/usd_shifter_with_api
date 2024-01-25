@@ -1,19 +1,19 @@
 function renderInputEdit(elInputEdits) {
   const ctrl = elInputEdits.getAttribute("ctrl");
-  const foundTokenVolume = model.getVolumeByCaption(ctrl);
+  const foundTokenVolume = model.getTokenByField(ctrl, "volume");
   elInputEdits.value = foundTokenVolume;
 }
 
 function renderProgress(elProgress) {
   const ctrl = elProgress.getAttribute("ctrl");
-  elProgress.max = model.getRangeMaxByCaption(ctrl);
-  elProgress.value = model.getVolumeByCaption(ctrl);
+  elProgress.max = model.getTokenByField(ctrl, "rangeMaximum");
+  elProgress.value = model.getTokenByField(ctrl, "volume");
 }
 
 function renderInputRange(elRange) {
   const ctrl = elRange.getAttribute("ctrl");
-  elRange.max = model.getRangeMaxByCaption(ctrl);
-  elRange.value = model.getVolumeByCaption(ctrl);
+  elRange.max = model.getTokenByField(ctrl, "rangeMaximum");
+  elRange.value = model.getTokenByField(ctrl, "volume");
 }
 
 function renderInputEdits() {
@@ -120,7 +120,7 @@ function renderBottomPave(ctrl) {
 
 function renderCurrencyPrice(elCurrencyPrice) {
   const ctrl = elCurrencyPrice.getAttribute("ctrl");
-  const currencyValue = model.getCountByCaption(ctrl);
+  const currencyValue = model.getTokenByField(ctrl, "count");
   elCurrencyPrice.textContent = +currencyValue.toPrecision(3);
 }
 
@@ -139,6 +139,7 @@ function renderShowDialog() {
   const elDialog = document.querySelector("dialog");
   elDialog.showModal();
 }
+
 function renderHideDialog() {
   const elDialog = document.querySelector("dialog");
   elDialog.close();
@@ -178,11 +179,3 @@ function renderModalSmallTokenName() {
 function clearModalContent() {
   elModalContent.textContent = "";
 }
-
-//view.js
-// function renderCurrencyPrice(elCurrencyPrice) {
-//   const ctrl = elCurrencyPrice.getAttribute("ctrl");
-//   model.updateTokenPrice(ctrl,(tokenName, tokenPrice) => {
-//     elCurrencyPrice.textContent = (tokenName, tokenPrice)
-//   })
-// }

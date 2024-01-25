@@ -14,11 +14,10 @@ function onClickAddTokenHandler() {
       },
       () => {
         renderModalNotFound();
-        console.log("ERROR!!");
+        console.log("error");
       }
     );
   }
-
   renderInputEdits();
   renderProgresses();
   renderInputRanges();
@@ -32,6 +31,7 @@ function onClickTotalBalanceHandler() {
   renderProgresses();
   renderInputRanges();
   renderCurrencyPrices();
+  elTextTotal.value = ''
 }
 
 function onInputEditHandler(e) {
@@ -43,6 +43,7 @@ function onInputEditHandler(e) {
   renderInputRanges();
   renderCurrencyPrices();
 }
+
 function onClickPlusButtonHandler(e) {
   const ctrl = e.target.getAttribute("ctrl");
   model.setPlus(ctrl);
@@ -51,6 +52,7 @@ function onClickPlusButtonHandler(e) {
   renderInputRanges();
   renderCurrencyPrices();
 }
+
 function onClickMinusButtonHandler(e) {
   const ctrl = e.target.getAttribute("ctrl");
   model.setMinus(ctrl);
@@ -59,6 +61,7 @@ function onClickMinusButtonHandler(e) {
   renderInputRanges();
   renderCurrencyPrices();
 }
+
 function oninputRangeHandler(e) {
   const ctrl = e.target.getAttribute("ctrl");
   model.setValue(ctrl, e.target.value);
@@ -73,9 +76,15 @@ function onClickCloseBlockHandler(e) {
   model.removeToken(ctrl);
   removeBlock(elCloseButton);
 }
+
 function onClickShowModalHandler() {
   renderShowDialog();
 }
+
 function onClickHideModalHandler() {
   renderHideDialog();
 }
+
+
+
+

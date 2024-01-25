@@ -33,9 +33,9 @@ const model = {
 
   addToken(tokenName) {
     if (this.isTokenExist(tokenName)) {
-      console.log("такой токен уже существует");
+      console.log("a token already exists");
     } else {
-      console.log("добавляю новый");
+      console.log("new token added");
       this.tokens.push({
         caption: tokenName,
         price: 0,
@@ -136,38 +136,7 @@ const model = {
         console.log("error", error);
       });
   },
-
-  getPriceByCaption(tokenName) {
-    const token = this.tokens.find((token) => token.caption === tokenName);
-    return token.price;
-  },
-  getVolumeByCaption(tokenName) {
-    const token = this.tokens.find((token) => token.caption === tokenName);
-    return token.volume;
-  },
-  getCountByCaption(tokenName) {
-    const token = this.tokens.find((token) => token.caption === tokenName);
-    return token.count;
-  },
-  getRangeMaxByCaption(tokenName) {
-    const token = this.tokens.find((token) => token.caption === tokenName);
-    return token.rangeMaximum;
+  getTokenByField(tokenName, fieldName) {
+    return this.tokens.find((token) => token.caption === tokenName)[fieldName];
   },
 };
-
-// console.log(model.tokens);
-// model.setTotal(200)
-// console.log(model.tokens);
-// model.setValue('ltc',1)
-// console.log(model.tokens);
-// model.setValue('doge',100)
-// model.addToken('aaa')
-// model.setValue('aaa',10)
-
-// model.getMaxByCaption('btc')
-// model.setValue('lol', 100)
-// console.log(model.tokens);
-// model.setPlus('lol')
-// console.log(model.tokens);
-// model.removeToken('btc')
-// console.log(model.tokens);

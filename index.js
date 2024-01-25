@@ -20,15 +20,19 @@ hideModalBtn.onclick = onClickHideModalHandler;
 elInputEdits.forEach((elInputEdit) => {
   elInputEdit.oninput = onInputEditHandler;
 });
+
 elPlusButtons.forEach((elPlusButton) => {
   elPlusButton.onclick = onClickPlusButtonHandler;
 });
+
 elMinusButtons.forEach((elMinusButton) => {
   elMinusButton.onclick = onClickMinusButtonHandler;
 });
+
 elInputRanges.forEach((elInputRange) => {
   elInputRange.oninput = oninputRangeHandler;
 });
+
 elCloseBtns.forEach((elCloseBtn) => {
   elCloseBtn.onclick = onClickCloseBlockHandler;
 });
@@ -36,9 +40,9 @@ elCloseBtns.forEach((elCloseBtn) => {
 function updateTokensAll() {
   model.tokens.forEach((token) => {
     model.updateTokenPrice(token.caption, (tokenName, tokenPrice) => {
-      console.log(tokenName, tokenPrice);
       model.setTokenPrice(tokenName, tokenPrice);
     });
   });
 }
+
 updateTokensAll();
