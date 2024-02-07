@@ -1,5 +1,7 @@
 * {
   box-sizing: border-box;
+  /* margin: 0;
+  padding: 0; */
 }
 :root {
   --clr-master: #00c3ff;
@@ -272,14 +274,24 @@ html {
 }
 
 footer{
-  position: absolute;
   height: 65px;
   width: 100%;
-  right: 0;
-  bottom:0;
   background: linear-gradient(21deg, #10abff, #80ddff);
 }
 footer > p {
+  padding-top: 15px;
   text-align: center;
   color:#ffffff
+}
+
+@media (max-width: 400px){
+  html {
+    font-size: 18px;
+  }
+  .shifter {
+    width: 150px;
+    margin: 5px;
+    padding: 5px;
+  }
+  
 }
